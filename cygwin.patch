@@ -1,0 +1,26 @@
+diff -ur gdal-1.6.1/GNUmakefile gdal-1.6.1.new/GNUmakefile
+--- gdal-1.6.1/GNUmakefile	2008-12-15 21:48:07.000000000 +0100
++++ gdal-1.6.1.new/GNUmakefile	2009-12-02 21:00:14.156250000 +0100
+@@ -27,7 +27,7 @@
+ force-lib:
+ 	$(AR) r $(GDAL_LIB) $(GDAL_OBJ)
+ 	$(RANLIB) $(GDAL_LIB)
+-	$(LD_SHARED) $(GDAL_SLIB_SONAME) $(GDAL_OBJ) $(GDAL_LIBS) $(LDFLAGS) $(LIBS) \
++	$(LD_SHARED) $(GDAL_SLIB_SONAME) $(GDAL_OBJ) $(GDAL_LIBS) $(LDFLAGS) -lsqlite3 $(LIBS) \
+ 		-o $(GDAL_SLIB)
+ 
+ $(GDAL_LIB):	$(GDAL_OBJ) GDALmake.opt
+@@ -36,11 +36,11 @@
+ 	$(RANLIB) $(GDAL_LIB)
+ 
+ $(GDAL_SLIB):	$(GDAL_OBJ) $(GDAL_LIB)
+-	$(LD_SHARED) $(GDAL_SLIB_SONAME) $(GDAL_OBJ) $(GDAL_LIBS) $(LDFLAGS) $(LIBS) \
++	$(LD_SHARED) $(GDAL_SLIB_SONAME) $(GDAL_OBJ) $(GDAL_LIBS) $(LDFLAGS) -lsqlite3 $(LIBS) \
+ 		-o $(GDAL_SLIB)
+ 
+ $(LIBGDAL):	$(GDAL_OBJ:.o=.lo)
+-	$(LD) $(LDFLAGS) $(LIBS) -o $@ $(GDAL_OBJ:.o=.lo) \
++	$(LD) $(LDFLAGS) -lsqlite3 $(LIBS) -o $@ $(GDAL_OBJ:.o=.lo) \
+ 	    -rpath $(INST_LIB) \
+ 	    -no-undefined \
+ 	    -version-info $(LIBGDAL_CURRENT):$(LIBGDAL_REVISION):$(LIBGDAL_AGE)
