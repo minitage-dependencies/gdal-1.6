@@ -1,6 +1,6 @@
 diff -ur gdal-1.6.1/GNUmakefile gdal-1.6.1.new/GNUmakefile
 --- gdal-1.6.1/GNUmakefile	2008-12-15 21:48:07.000000000 +0100
-+++ gdal-1.6.1.new/GNUmakefile	2009-12-06 19:27:10.453125000 +0100
++++ gdal-1.6.1.new/GNUmakefile	2009-12-06 19:27:10.000000000 +0100
 @@ -27,7 +27,7 @@
  force-lib:
  	$(AR) r $(GDAL_LIB) $(GDAL_OBJ)
@@ -26,7 +26,7 @@ diff -ur gdal-1.6.1/GNUmakefile gdal-1.6.1.new/GNUmakefile
  	    -version-info $(LIBGDAL_CURRENT):$(LIBGDAL_REVISION):$(LIBGDAL_AGE)
 diff -ur gdal-1.6.1/configure gdal-1.6.1.new/configure
 --- gdal-1.6.1/configure	2009-04-14 18:29:35.000000000 +0200
-+++ gdal-1.6.1.new/configure	2009-12-06 19:29:30.062500000 +0100
++++ gdal-1.6.1.new/configure	2009-12-06 19:29:30.000000000 +0100
 @@ -9305,7 +9305,7 @@
        export_symbols_cmds='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[BCDGRS][ ]/s/.*[ ]\([^ ]*\)/\1 DATA/'\'' | $SED -e '\''/^[AITW][ ]/s/.*[ ]//'\'' | sort | uniq > $export_symbols'
  
@@ -63,3 +63,24 @@ diff -ur gdal-1.6.1/configure gdal-1.6.1.new/configure
          else
            ld_shlibs_CXX=no
          fi
+diff -ur gdal-1.6.1/ogr/ogrct.cpp gdal-1.6.1.new/ogr/ogrct.cpp
+--- gdal-1.6.1/ogr/ogrct.cpp	2008-09-16 10:32:39.000000000 +0200
++++ gdal-1.6.1.new/ogr/ogrct.cpp	2009-12-23 21:05:13.562500000 +0100
+@@ -69,7 +69,7 @@
+ 
+ #if (defined(WIN32) || defined(WIN32CE)) && !defined(__MINGW32__)
+ #  define LIBNAME      "proj.dll"
+-#elif defined(__CYGWIN__) || defined(__MINGW32__)
++#elif defined(__MINGW32__)
+ // XXX: If PROJ.4 library was properly built using libtool in Cygwin or MinGW
+ // environments it has the interface version number embedded in the file name
+ // (it is CURRENT-AGE number). If DLL came somewhere else (e.g. from MSVC
+@@ -77,6 +77,8 @@
+ // specify the right library name. By default assume that in Cygwin/MinGW all
+ // components were buit in the same way.
+ #  define LIBNAME      "libproj-0.dll"
++#elif defined(__CYGWIN__)
++#  define LIBNAME      "cygproj-0.dll"
+ #elif defined(__APPLE__)
+ #  define LIBNAME      "libproj.dylib"
+ #else
